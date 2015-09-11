@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2011 (http://www.altova.com) by dfg (dgdf) -->
+<!--
+	道具表
+	itemID:道具id
+	itemQuality:道具品质
+	name：道具名字
+	type:道具类型
+	enum ItemType //道具类型
+	{
+		ItemType_NONE = 0, ///空类型
+		Item_General = 1, ///普通道具
+		Item_GiftBag = 2, ///礼包道具
+		Item_Equip = 3, ///装备
+		Item_EquipMaterial = 4, ///装备材料
+		Item_Chip = 5,  ///碎片
+		Item_Equip = 6,  ///宝具
+		ItemTypeMax,
+	};
+	giftOpen:礼包
+	lastTime:道具持续时间（0永久性道具，非0时效道具)
+	maxCount:一个包裹格子能放的道具最大值
+	-->
+<Config itemID="0" itemQuality="0">
+	<item itemID="4001" itemQuality="1" name="英雄宝箱钥匙" note="英雄宝箱钥匙" type="1" giftOpen="1" lastTime="0" maxCount="99" iconName="4001" itemDesc="英雄宝箱钥匙" sellPrice="135"/>
+	<item itemID="4002" itemQuality="1" name="装备宝箱钥匙" note="装备宝箱钥匙" type="1" giftOpen="1" lastTime="0" maxCount="99" iconName="4002" itemDesc="装备宝箱钥匙" sellPrice="135"/>
+	<item itemID="5001" itemQuality="1" name="初级英雄宝箱" note="初级英雄宝箱" type="2" giftOpen="1" lastTime="0" maxCount="99" iconName="5001" itemDesc="初级英雄宝箱" sellPrice="135"/>
+	<item itemID="5002" itemQuality="1" name="初级装备宝箱" note="初级装备宝箱" type="2" giftOpen="1" lastTime="0" maxCount="99" iconName="5002" itemDesc="初级装备宝箱" sellPrice="135"/>
+	<item itemID="5003" itemQuality="3" name="高级英雄宝箱" note="高级英雄宝箱" type="2" giftOpen="1" lastTime="0" maxCount="99" iconName="5003" itemDesc="高级英雄宝箱" sellPrice="135"/>
+	<item itemID="5004" itemQuality="3" name="高级英雄宝箱" note="高级英雄宝箱" type="2" giftOpen="1" lastTime="0" maxCount="99" iconName="5004" itemDesc="高级英雄宝箱" sellPrice="135"/>
+</Config>

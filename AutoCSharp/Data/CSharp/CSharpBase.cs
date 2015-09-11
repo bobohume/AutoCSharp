@@ -1,0 +1,144 @@
+﻿/*
+ * Copyright (c) Killliu
+ * All rights reserved.
+ * 
+ * 文 件 名：Base
+ * 简    述： 
+ * 创建时间：2015/7/13 15:09:34
+ * 创 建 人：刘沙
+ * 修改描述：
+ * 修改时间：
+ * */
+using System;
+using System.CodeDom;
+using System.CodeDom.Compiler;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+
+public class CSharpBase
+{
+    protected internal CodeTypeDeclaration classer;
+    /// <summary>
+    /// 命名空间列表
+    /// </summary>
+    protected internal List<string> usingList = new List<string>();
+    /// <summary>
+    /// 类继承列表
+    /// </summary>
+    protected internal List<string> ineritList = new List<string>();
+    /// <summary>
+    /// 构造函数列表
+    /// </summary>
+    protected internal List<ConstructItem> constructList = new List<ConstructItem>();
+    /// <summary>
+    /// 字段列表(一般为私有)
+    /// </summary>
+    protected internal List<FieldItem> fieldList = new List<FieldItem>();
+    /// <summary>
+    /// 属性列表
+    /// </summary>
+    protected internal List<PropertyItem> propertyList = new List<PropertyItem>();
+    /// <summary>
+    /// 方法列表
+    /// </summary>
+    protected internal List<MethodItem> methodList = new List<MethodItem>();
+
+    private string spaceName;
+    protected internal string className;
+    private string folderName;
+
+    public CSharpBase(string inSpace, string inClassName, string inFolderName)
+    {
+        spaceName = inSpace.Trim();
+        className = Assist.FirstLetterUp(inClassName);
+        folderName = inFolderName;
+        classer = new CodeTypeDeclaration(className);
+        classer.IsClass = true;
+    }
+
+    internal virtual void OnCreate() { }
+
+    public void Create()
+    {
+        OnCreate();
+        CodeCompileUnit unit = new CodeCompileUnit();
+        // 命名空间
+        CodeNamespace nameSpace = new CodeNamespace(spaceName);
+        // 引用
+        usingList.ForEach(i => nameSpace.Imports.Add(new CodeNamespaceImport(i)));
+        // 类的访问限制符
+        classer.TypeAttributes = System.Reflection.TypeAttributes.Public;
+        // 类的继承列表
+        if (ineritList.Count > 0)
+            ineritList.ForEach(i => classer.BaseTypes.Add(new CodeTypeReference(i)));
+        nameSpace.Types.Add(classer);
+        unit.Namespaces.Add(nameSpace);
+        // 构造函数
+        constructList.ForEach(i => classer.Members.Add(i.Struct));
+        // 字段
+        fieldList.ForEach(i => classer.Members.Add(i.Field));
+        // 属性
+        propertyList.ForEach(i => classer.Members.Add(i.Property));
+        // 方法列表
+        methodList.ForEach(i => classer.Members.Add(i.Method));
+
+        // 创建.cs文件
+        CodeDomProvider provider = CodeDomProvider.CreateProvider("CSharp");
+        CodeGeneratorOptions options = new CodeGeneratorOptions();
+        options.BracingStyle = "C";
+        options.BlankLinesBetweenMembers = true;
+        using (System.IO.StreamWriter sw = new StreamWriter((folderName == "" ? "" : folderName + "/") + className + ".cs"))
+        {
+            provider.GenerateCodeFromCompileUnit(unit, sw, options);
+        }
+    }
+
+    /// <summary>
+    /// 类继承(用于界面输入数据)
+    /// <para>以 , 分开</para>
+    /// </summary>
+    /// <param name="inStr"></param>
+    public void SetInherit(string inStr)
+    {
+        if (inStr.Trim() != "")
+        {
+            string[] l = inStr.Split(',');
+            for (int i = 0; i < l.Length; i++)
+            {
+                ineritList.Add(l[i].Trim());
+            }
+        }
+    }
+
+    /// <summary>
+    /// 增加注释
+    /// </summary>
+    /// <param name="s"></param>
+    /// <param name="inTarget"></param>
+    public void SetComment(string s, CodeTypeMember inTarget)
+    {
+        inTarget.Comments.Add(new CodeCommentStatement("<summary>", true));
+        inTarget.Comments.Add(new CodeCommentStatement(s, true));
+        inTarget.Comments.Add(new CodeCommentStatement("</summary>", true));
+    }
+
+    /// <summary>
+    /// 增加语句
+    /// <para>eg. string[] ss = inArg0.Split('^')</para>
+    /// <para>eg. _key = unit.Parse(ss[i]);</para>
+    /// </summary>
+    public CodeStatement Line(string inLeft, string inRight)
+    {
+        return new CodeAssignStatement(new CodeVariableReferenceExpression(inLeft), new CodeVariableReferenceExpression(inRight));
+    }
+
+    /// <summary>
+    /// 条件语句
+    /// </summary>
+    public void AddConditionStatement(CodeConditionStatement inStatement)
+    {
+        methodList[0].Method.Statements.Add(inStatement);
+    }
+}
+

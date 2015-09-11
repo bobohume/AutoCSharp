@@ -1,0 +1,6 @@
+package KLData;
+
+message Login{
+	required int32 PassWord = 1;
+	required string UserName = 2;
+}

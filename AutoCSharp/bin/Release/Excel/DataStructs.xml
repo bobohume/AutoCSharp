@@ -1,0 +1,6 @@
+<?xml  version="1.0" encoding="GB2312"?>
+<Config>
+	 <Vector2Unit x="0.0" y="0.0"/>
+	 <Vector3Unit x="0.0" y="0.0" z="0.0"/>
+	 <Vector4Unit x="0.0" y="0.0" z="0.0" w="0.0"/>
+</Config>
