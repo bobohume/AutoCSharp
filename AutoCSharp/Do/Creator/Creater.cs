@@ -16,6 +16,7 @@ using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Xml;
 
 namespace AutoCSharp.Creator
@@ -169,7 +170,7 @@ namespace AutoCSharp.Creator
         }
 
         /// <summary>
-        /// 
+        /// ------------------- TODO -------------------
         /// </summary>
         /// <returns></returns>
         public bool ExcelToXml(string inPath, string inFolderName)
@@ -295,9 +296,14 @@ namespace AutoCSharp.Creator
                 {
                     Queue<string> sq = new Queue<string>();
                     StreamReader sr = new StreamReader(path, System.Text.Encoding.Default);
+                    String line;
                     while (!sr.EndOfStream)
                     {
-                        sq.Enqueue(sr.ReadLine());
+                        line = sr.ReadLine().Trim();
+                        line = Regex.Replace(line, @"/{2}.+", "");
+                        line = Regex.Replace(line, @"{\s*", "");
+                        if (line != "")
+                            sq.Enqueue(line);
                     }
                     sr.Close();
                     sr.Dispose();

@@ -40,7 +40,8 @@ public class FieldItem
     /// <param name="inRight"></param>
     public FieldItem(string inLeft, string inFieldName, string inRight = "", MemberAttributes inAtt = MemberAttributes.Private)
     {
-        field = new CodeMemberField(inLeft, inFieldName);
+        bool isSelfDefine = false;
+        field = new CodeMemberField(Assist.GetFieldType(inLeft, ref isSelfDefine).ToString(), inFieldName);
         if (inRight != "")
         {
             CodeVariableReferenceExpression right = new CodeVariableReferenceExpression(inRight);

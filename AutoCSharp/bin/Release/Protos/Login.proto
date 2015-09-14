@@ -4,3 +4,10 @@ message Login{
 	required int32 PassWord = 1;
 	required string UserName = 2;
 }
+
+message UserInfo
+{
+	required int32 age = 1;
+	required int32 bookCount = 2;
+	required int32[] books = 3;	
+}

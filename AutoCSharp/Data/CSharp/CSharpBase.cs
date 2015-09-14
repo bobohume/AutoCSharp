@@ -140,5 +140,22 @@ public class CSharpBase
     {
         methodList[0].Method.Statements.Add(inStatement);
     }
+
+    /// <summary>
+    /// For 循环
+    /// </summary>
+    /// <param name="inType">循环的类型 eg. typeof(int)</param>
+    /// <param name="inTypeName">循环变量 eg. i</param>
+    /// <param name="inTypeValue">循环变量的起始值</param>
+    /// <param name="inLessthan">循环的极值</param>
+    /// <returns></returns>
+    public CodeIterationStatement AddFor(Type inType, string inTypeName, object inTypeValue, string inLessthan)
+    {
+        CodeIterationStatement curFor = new CodeIterationStatement();
+        curFor.InitStatement = new CodeVariableDeclarationStatement(inType, inTypeName, new CodePrimitiveExpression(inTypeValue));
+        curFor.TestExpression = new CodeBinaryOperatorExpression(new CodeVariableReferenceExpression(inTypeName), CodeBinaryOperatorType.LessThan, new CodeVariableReferenceExpression(inLessthan));
+        curFor.IncrementStatement = new CodeAssignStatement(new CodeVariableReferenceExpression(inTypeName), new CodeBinaryOperatorExpression(new CodeVariableReferenceExpression(inTypeName), CodeBinaryOperatorType.Add, new CodePrimitiveExpression(1)));
+        return curFor;
+    }
 }
 

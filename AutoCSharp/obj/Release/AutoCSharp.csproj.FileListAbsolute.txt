@@ -31,3 +31,14 @@ E:\AutoCSharp\AutoCSharp\obj\Release\AutoCSharp.csproj.GenerateResource.Cache
 D:\GitHubs\AutoCSharp\AutoCSharp\bin\Release\AutoCSharp.exe.config
 D:\GitHubs\AutoCSharp\AutoCSharp\obj\Release\AutoCSharp.exe
 D:\GitHubs\AutoCSharp\AutoCSharp\obj\Release\AutoCSharp.pdb
+D:\GitHubs\AutoCSharp\AutoCSharp\bin\Release\AutoCSharp.exe
+D:\GitHubs\AutoCSharp\AutoCSharp\bin\Release\AutoCSharp.pdb
+D:\GitHubs\AutoCSharp\AutoCSharp\obj\Release\AutoCSharp.csprojResolveAssemblyReference.cache
+D:\GitHubs\AutoCSharp\AutoCSharp\obj\Release\MainWindow.g.cs
+D:\GitHubs\AutoCSharp\AutoCSharp\obj\Release\App.g.cs
+D:\GitHubs\AutoCSharp\AutoCSharp\obj\Release\AutoCSharp_MarkupCompile.cache
+D:\GitHubs\AutoCSharp\AutoCSharp\obj\Release\AutoCSharp_MarkupCompile.lref
+D:\GitHubs\AutoCSharp\AutoCSharp\obj\Release\MainWindow.baml
+D:\GitHubs\AutoCSharp\AutoCSharp\obj\Release\AutoCSharp.g.resources
+D:\GitHubs\AutoCSharp\AutoCSharp\obj\Release\AutoCSharp.Properties.Resources.resources
+D:\GitHubs\AutoCSharp\AutoCSharp\obj\Release\AutoCSharp.csproj.GenerateResource.Cache

@@ -211,4 +211,49 @@ public class Assist
         }
         return (T)Enum.Parse(typeof(T), inStr);
     }
+
+
+    /// <summary>
+    /// string -> Type
+    /// </summary>
+    /// <param name="s">字段名</param>
+    /// <param name="isSelfDefine">是否为自定义类型（eg. vector3unit）</param>
+    /// <returns></returns>
+    static public Type GetFieldType(string s, ref bool isSelfDefine)
+    {
+        string b = s == "float" ? "System.Single" :
+                   s == "float[]" ? "System.Single[]" :
+                   s == "int32" ? "System.Int32" :
+                   s == "int32[]" ? "System.Int32[]" :
+                   s == "uint32" ? "System.UInt32" :
+                   s == "uint32[]" ? "System.UInt32[]" :
+                   s == "int64" ? "System.Int64" :
+                   s == "int64[]" ? "System.Int64[]" :
+                   s == "uint64" ? "System.UInt64" :
+                   s == "uint64[]" ? "System.UInt64[]" :
+                   s == "string" ? "System.String" :
+                   s == "string[]" ? "System.String[]" :
+                   s == "short" || s == "int8" || s == "byte" ? "System.Byte" :
+                   s == "short[]" || s == "int8[]" || s == "byte[]" ? "System.Byte[]" : "KLData." + s;
+        isSelfDefine = b.Contains("KLData");
+        return Type.GetType(b);
+    }
+
+    /// <summary>
+    /// string -> 转byte[]的方法名
+    /// </summary>
+    /// <param name="s">类型名</param>
+    /// <returns></returns>
+    static public string GetTobytesMethodName(string s)
+    {
+        string b = s == "float" || s == "System.Single" ? "ReadFloat()" :
+                   s == "int16" || s == "short" || s == "System.Int16" ? "ReadUnsignedShort()" :
+                   s == "int32" || s == "System.Int32" ? "ReadInt()" :
+                   s == "int64" || s == "System.Int64" ? "ReadInt64()" :
+                   s == "uint32" || s == "System.UInt32" ? "ReadUnsignedInt32()" :
+                   s == "uint64" || s == "System.UInt64" ? "ReadUnsignedInt64()" :
+                   s == "string" || s == "System.String" ? "ReadString()" :
+                   s == "byte" || s == "int8" || s == "System.SByte" ? "ReadByte()" : "";
+        return b;
+    }
 }
