@@ -14,7 +14,7 @@ using System.CodeDom;
 using System.Collections.Generic;
 namespace AutoCSharp.Creator
 {
-    public class ExcelToCSharp : CSharpBase
+    public class ExcelToCSharp : ToCSharpBase
     {
         public ExcelToCSharp(string inSpace, string inClassName, string inFolderName)
             : base(inSpace, inClassName, inFolderName)
@@ -33,7 +33,7 @@ namespace AutoCSharp.Creator
         /// <param name="inList">0: 字段名</param>
         public void SetValue(List<string[]> inList)
         {
-            MethodItem mi = new MethodItem("Set", MemberAttributes.Final | MemberAttributes.Public, new List<string>(){"List<string>"});
+            ItemMethod mi = new ItemMethod("Set", MemberAttributes.Final | MemberAttributes.Public, new List<string>(){"List<string>"});
 
             classer.CustomAttributes.Add(new CodeAttributeDeclaration("ProtoContract"));
 
@@ -43,12 +43,12 @@ namespace AutoCSharp.Creator
             {
                 string[] ss = inList[i][1].Split('+');
                 string typeString = ss[1];
-                CustumType ct = Assist.StrToEnum<CustumType>(typeString, CustumType.None);
+                CustumType ct = Stringer.StrToEnum<CustumType>(typeString, CustumType.None);
                 if (ct != CustumType.None) // 基本类型或自定义类型
                 {
                     //AddField(inList[i][0], inList[i][1], MemberAttributes.Private);
-                    fieldList.Add(new FieldItem(inList[i][0], inList[i][1], MemberAttributes.Private));
-                    PropertyItem item = new PropertyItem(inList[i][0]);
+                    fieldList.Add(new ItemField(inList[i][0], inList[i][1], MemberAttributes.Private));
+                    ItemProperty item = new ItemProperty(inList[i][0]);
                     item.SetGetName();
                     item.SetSetName();
                     item.SetComment(inList[i][2]);
@@ -62,8 +62,8 @@ namespace AutoCSharp.Creator
                         keyList.Add(inList[i][0]);
                     }
 
-                    Type vType = Assist.stringToType(inList[i][1]);
-                    string left = "_" + Assist.FirstLetterLower(inList[i][0]);
+                    Type vType = Stringer.ToType(inList[i][1]);
+                    string left = "_" + Stringer.FirstLetterLower(inList[i][0]);
                     CodeVariableReferenceExpression right = new CodeVariableReferenceExpression();
                     if (vType == typeof(System.String))
                     {
@@ -86,9 +86,9 @@ namespace AutoCSharp.Creator
                 }
                 else // 从属表
                 {
-                    string subclassname = Assist.FirstLetterUp(typeString);
+                    string subclassname = Stringer.FirstLetterUp(typeString);
 
-                    MethodItem mis = new MethodItem("Get" + subclassname, MemberAttributes.Final | MemberAttributes.Public, new List<string>() { "System.String" , "PBData"});
+                    ItemMethod mis = new ItemMethod("Get" + subclassname, MemberAttributes.Final | MemberAttributes.Public, new List<string>() { "System.String" , "PBData"});
 
                     SetComment("获取" + inList[i][2], mis.Method);
 
@@ -100,7 +100,7 @@ namespace AutoCSharp.Creator
             }
 
             // Key 属性
-            PropertyItem keyPropertyItem = new PropertyItem("key");
+            ItemProperty keyPropertyItem = new ItemProperty("key");
             if (keyList.Count == 1)
             {
                 keyPropertyItem.SetGetName(keyList[0] + ".ToString()");

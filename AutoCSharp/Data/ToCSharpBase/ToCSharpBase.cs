@@ -2,9 +2,9 @@
  * Copyright (c) Killliu
  * All rights reserved.
  * 
- * 文 件 名：Base
+ * 文 件 名：ToCSharpBase
  * 简    述： 
- * 创建时间：2015/7/13 15:09:34
+ * 创建时间：2015/9/15 13:44:22
  * 创 建 人：刘沙
  * 修改描述：
  * 修改时间：
@@ -14,9 +14,7 @@ using System.CodeDom;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
-
-public class CSharpBase
+public class ToCSharpBase
 {
     protected internal CodeTypeDeclaration classer;
     /// <summary>
@@ -30,28 +28,28 @@ public class CSharpBase
     /// <summary>
     /// 构造函数列表
     /// </summary>
-    protected internal List<ConstructItem> constructList = new List<ConstructItem>();
+    protected internal List<ItemConstruct> constructList = new List<ItemConstruct>();
     /// <summary>
     /// 字段列表(一般为私有)
     /// </summary>
-    protected internal List<FieldItem> fieldList = new List<FieldItem>();
+    protected internal List<ItemField> fieldList = new List<ItemField>();
     /// <summary>
     /// 属性列表
     /// </summary>
-    protected internal List<PropertyItem> propertyList = new List<PropertyItem>();
+    protected internal List<ItemProperty> propertyList = new List<ItemProperty>();
     /// <summary>
     /// 方法列表
     /// </summary>
-    protected internal List<MethodItem> methodList = new List<MethodItem>();
+    protected internal List<ItemMethod> methodList = new List<ItemMethod>();
 
     private string spaceName;
     protected internal string className;
     private string folderName;
 
-    public CSharpBase(string inSpace, string inClassName, string inFolderName)
+    public ToCSharpBase(string inSpace, string inClassName, string inFolderName)
     {
         spaceName = inSpace.Trim();
-        className = Assist.FirstLetterUp(inClassName);
+        className = Stringer.FirstLetterUp(inClassName);
         folderName = inFolderName;
         classer = new CodeTypeDeclaration(className);
         classer.IsClass = true;
@@ -158,4 +156,3 @@ public class CSharpBase
         return curFor;
     }
 }
-

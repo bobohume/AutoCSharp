@@ -16,10 +16,10 @@ using System.Reflection;
 
 namespace AutoCSharp.Creator
 {
-    public class ProtoToCSharp : CSharpBase
+    public class ProtoToCSharp : ToCSharpBase
     {
-        private MethodItem toBytes;
-        private MethodItem toStream;
+        private ItemMethod toBytes;
+        private ItemMethod toStream;
 
         /// <summary>
         /// .proto -> .cs
@@ -38,14 +38,14 @@ namespace AutoCSharp.Creator
         {
             foreach (KeyValuePair<string, string> item in inValues)
             {
-                fieldList.Add(new FieldItem(item.Value, item.Key, "", MemberAttributes.Public));
+                fieldList.Add(new ItemField(item.Value, item.Key, "", MemberAttributes.Public));
             }
 
-            toBytes = new MethodItem("ToBytes", MemberAttributes.Public | MemberAttributes.Override, new List<string>() { });
+            toBytes = new ItemMethod("ToBytes", MemberAttributes.Public | MemberAttributes.Override, new List<string>() { });
             toBytes.SetReturn("System.byte[]");
             toBytes.Method.Statements.Add(Line("ByteArray bytes", "new ByteArray()"));
 
-            toStream = new MethodItem("ToStream", MemberAttributes.Public | MemberAttributes.Static, new List<string>() { "System.byte[]" });
+            toStream = new ItemMethod("ToStream", MemberAttributes.Public | MemberAttributes.Static, new List<string>() { "System.byte[]" });
             toStream.SetReturn("Stream");
             toStream.Method.Statements.Add(Line(className + " stream", "new " + className + "()"));
             toStream.Method.Statements.Add(Line("ByteArray data", "new ByteArray(inArg0)"));

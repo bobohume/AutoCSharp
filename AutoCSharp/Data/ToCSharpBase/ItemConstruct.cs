@@ -1,10 +1,10 @@
-﻿/*
+/*
  * Copyright (c) Killliu
  * All rights reserved.
  * 
- * 文 件 名：ConstructItem
- * 简    述：构造函数
- * 创建时间：2015/8/16 17:35:43
+ * 文 件 名：ItemConstruct
+ * 简    述： 
+ * 创建时间：2015/9/15 10:26:38
  * 创 建 人：刘沙
  * 修改描述：
  * 修改时间：
@@ -16,7 +16,7 @@ using System.Collections.Generic;
 /// <summary>
 /// 构造函数
 /// </summary>
-public class ConstructItem
+public class ItemConstruct
 {
     private CodeConstructor construct;
     /// <summary>
@@ -27,7 +27,7 @@ public class ConstructItem
     /// <summary>
     /// 无参
     /// </summary>
-    public ConstructItem()
+    public ItemConstruct()
     {
         construct = new CodeConstructor();
         construct.Attributes = MemberAttributes.Public;
@@ -37,7 +37,7 @@ public class ConstructItem
     /// 有参
     /// </summary>
     /// <param name="inPars"></param>
-    public ConstructItem(List<string> inPars)
+    public ItemConstruct(List<string> inPars)
     {
         construct = new CodeConstructor();
         for (int i = 0; i < inPars.Count; i++)

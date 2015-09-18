@@ -19,7 +19,7 @@ namespace AutoCSharp.Creator
     /// <summary>
     /// 将(xml)自定义的数据结构转换成 Protocol Buffer  所用的类
     /// </summary>
-    public class XmlToCSharp : CSharpBase
+    public class XmlToCSharp : ToCSharpBase
     {
         public XmlToCSharp(string inSpace, string inClassName, string inFolderName)
             : base(inSpace, inClassName, inFolderName)
@@ -29,18 +29,18 @@ namespace AutoCSharp.Creator
 
         public void SetValue(XmlAttributeCollection inValue)
         {
-            constructList.Add(new ConstructItem());
+            constructList.Add(new ItemConstruct());
 
             // 构造函数
-            ConstructItem construct = new ConstructItem(new List<string>() { "System.String" });
+            ItemConstruct construct = new ItemConstruct(new List<string>() { "System.String" });
             construct.Struct.Statements.Add(Line("string[] ss", "inArg0.Split(\'^\')"));
 
             classer.CustomAttributes.Add(new CodeAttributeDeclaration("ProtoContract"));
             for (int i = 0; i < inValue.Count; i++)
             {
-                fieldList.Add(new FieldItem(inValue[i].Name, inValue[i].Value, MemberAttributes.Private));
+                fieldList.Add(new ItemField(inValue[i].Name, inValue[i].Value, MemberAttributes.Private));
 
-                PropertyItem item = new PropertyItem(inValue[i].Name);
+                ItemProperty item = new ItemProperty(inValue[i].Name);
                 item.SetGetName();
                 item.SetSetName();
                 item.SetValueType(inValue[i].Value);
@@ -48,12 +48,12 @@ namespace AutoCSharp.Creator
                 item.SetField("ProtoMember", (i + 1).ToString());
                 propertyList.Add(item);
 
-                Type t = Assist.stringToType(inValue[i].Value);
+                Type t = Stringer.ToType(inValue[i].Value);
 
                 string right = t == typeof(System.String) ? "ss[" + i + "]" :
                                t == typeof(System.UInt32) ? "uint.Parse(ss[" + i + "])" :
                                t == typeof(System.Single) ? "float.Parse(ss[" + i + "])" : "new " + t.ToString() + "(inValues[" + i + "])";
-                construct.Struct.Statements.Add(Line("_" + Assist.FirstLetterLower(inValue[i].Name), right));
+                construct.Struct.Statements.Add(Line("_" + Stringer.FirstLetterLower(inValue[i].Name), right));
             }
             constructList.Add(construct);
             Create();

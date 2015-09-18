@@ -16,9 +16,9 @@ namespace KLData
     public class Login : Stream
     {
         
-        public int PassWord;
+        public int32 PassWord;
         
-        public string UserName;
+        public @string UserName;
         
         public override byte[] ToBytes()
         {

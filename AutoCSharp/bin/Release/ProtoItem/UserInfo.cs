@@ -16,11 +16,11 @@ namespace KLData
     public class UserInfo : Stream
     {
         
-        public int age;
+        public int32 age;
         
-        public int bookCount;
+        public int32 bookCount;
         
-        public int[] books;
+        public int32[] books;
         
         public override byte[] ToBytes()
         {

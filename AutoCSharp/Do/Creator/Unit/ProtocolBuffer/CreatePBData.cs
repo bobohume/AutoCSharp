@@ -15,7 +15,7 @@ using System.Collections.Generic;
 
 namespace AutoCSharp.Creator
 {
-    public class CreatePBData : CSharpBase
+    public class CreatePBData : ToCSharpBase
     {
         public CreatePBData(string inSpace, string inClassName, string inFolderName)
             : base(inSpace, inClassName, inFolderName) { }
@@ -29,8 +29,8 @@ namespace AutoCSharp.Creator
 
             for (int i = 0; i < inNames.Count; i++)
             {
-                string classname = Assist.FirstLetterUp(inNames[i]);
-                FieldItem field = new FieldItem("Dictionary<string," + classname + ">", classname + "Dic", "new " + "Dictionary<string," + classname + ">()");
+                string classname = Stringer.FirstLetterUp(inNames[i]);
+                ItemField field = new ItemField("Dictionary<string," + classname + ">", classname + "Dic", "new " + "Dictionary<string," + classname + ">()");
                 field.SetAttributes(MemberAttributes.Final | MemberAttributes.Public);
                 field.AddAttributes("ProtoMember", i + 1);
                 fieldList.Add(field);

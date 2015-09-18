@@ -16,7 +16,7 @@ using System.Xml;
 
 namespace AutoCSharp.Creator
 {
-    public class XmlUnit : CSharpBase
+    public class XmlUnit : ToCSharpBase
     {
         public XmlUnit(string inSpace, string inClassName, string inFolderName)
             : base(inSpace, inClassName, inFolderName)
@@ -28,7 +28,7 @@ namespace AutoCSharp.Creator
             usingList.Add("System.Collections.Generic");
 
             // 方法列表
-            methodList.Add(new MethodItem("SetValue", MemberAttributes.Public | MemberAttributes.Final, new List<string>() { "Dictionary<string, string>" }));
+            methodList.Add(new ItemMethod("SetValue", MemberAttributes.Public | MemberAttributes.Final, new List<string>() { "Dictionary<string, string>" }));
         }
 
         public void SetNodeValue(XmlNode n)
@@ -38,9 +38,9 @@ namespace AutoCSharp.Creator
                 string value = n.Attributes[i].Value;
 
                 //AddField(n.Attributes[i].Name, value, MemberAttributes.Private);
-                fieldList.Add(new FieldItem(n.Attributes[i].Name, value, MemberAttributes.Private));
+                fieldList.Add(new ItemField(n.Attributes[i].Name, value, MemberAttributes.Private));
 
-                PropertyItem item = new PropertyItem(n.Attributes[i].Name);
+                ItemProperty item = new ItemProperty(n.Attributes[i].Name);
                 item.SetGetName();
                 item.SetValueType(value);
                 item.SetModifier(MemberAttributes.Public | MemberAttributes.Final);
@@ -51,15 +51,15 @@ namespace AutoCSharp.Creator
 
                 string parseLeft = "";
                 string parseRight = "";
-                if (Assist.IsNumber(value))
+                if (Stringer.IsNumber(value))
                 {
                     parseLeft = value.Contains(".") ? "float.Parse(" : "uint.Parse(";
                     parseRight = ")";
                 }
                 CodeVariableReferenceExpression right = new CodeVariableReferenceExpression(parseLeft + "inArg0[\"" + n.Attributes[i].Name + "\"]" + parseRight);
-                CodePropertyReferenceExpression left = new CodePropertyReferenceExpression(new CodeThisReferenceExpression(), "_" + Assist.FirstLetterLower(n.Attributes[i].Name));
+                CodePropertyReferenceExpression left = new CodePropertyReferenceExpression(new CodeThisReferenceExpression(), "_" + Stringer.FirstLetterLower(n.Attributes[i].Name));
 
-                if (Assist.IsNumber(value))
+                if (Stringer.IsNumber(value))
                 {
                     CodeConditionStatement numCondition = new CodeConditionStatement();
                     numCondition.Condition = new CodeVariableReferenceExpression("inArg0[\"" + n.Attributes[i].Name + "\"] == \"\"");

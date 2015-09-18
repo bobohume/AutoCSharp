@@ -1,17 +1,21 @@
-﻿/*
+/*
  * Copyright (c) Killliu
  * All rights reserved.
  * 
- * 文 件 名：FiledItem
+ * 文 件 名：ItemField
  * 简    述： 
- * 创建时间：2015/7/13 16:44:50
+ * 创建时间：2015/9/15 10:28:49
  * 创 建 人：刘沙
  * 修改描述：
  * 修改时间：
  * */
 using System;
 using System.CodeDom;
-public class FieldItem
+/// <summary>
+/// 字段
+/// <para>一般为私有eg. private int age</para>
+/// </summary>
+public class ItemField
 {
     private CodeMemberField field;
     /// <summary>
@@ -25,9 +29,9 @@ public class FieldItem
     /// <param name="inName">字段名</param>
     /// <param name="inType">字段类型</param>
     /// <param name="inAtt">访问修饰符</param>
-    public FieldItem(string inName, string inType, MemberAttributes inAtt)
+    public ItemField(string inName, string inType, MemberAttributes inAtt)
     {
-        field = new CodeMemberField(Assist.stringToType(inType), "_" + Assist.FirstLetterLower(inName));
+        field = new CodeMemberField(Stringer.ToType(inType), "_" + Stringer.FirstLetterLower(inName));
         field.Attributes = inAtt;
     }
 
@@ -38,10 +42,9 @@ public class FieldItem
     /// <param name="inLeft">字段类型</param>
     /// <param name="inFieldName"></param>
     /// <param name="inRight"></param>
-    public FieldItem(string inLeft, string inFieldName, string inRight = "", MemberAttributes inAtt = MemberAttributes.Private)
+    public ItemField(string inLeft, string inFieldName, string inRight = "", MemberAttributes inAtt = MemberAttributes.Private)
     {
-        bool isSelfDefine = false;
-        field = new CodeMemberField(Assist.GetFieldType(inLeft, ref isSelfDefine).ToString(), inFieldName);
+        field = new CodeMemberField(inLeft, inFieldName);
         if (inRight != "")
         {
             CodeVariableReferenceExpression right = new CodeVariableReferenceExpression(inRight);
@@ -70,4 +73,3 @@ public class FieldItem
         field.CustomAttributes.Add(new CodeAttributeDeclaration(inKey, new CodeAttributeArgument(new CodePrimitiveExpression(inValue))));
     }
 }
-

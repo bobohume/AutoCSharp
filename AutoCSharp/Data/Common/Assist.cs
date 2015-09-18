@@ -234,8 +234,8 @@ public class Assist
                    s == "string" ? "System.String" :
                    s == "string[]" ? "System.String[]" :
                    s == "short" || s == "int8" || s == "byte" ? "System.Byte" :
-                   s == "short[]" || s == "int8[]" || s == "byte[]" ? "System.Byte[]" : "KLData." + s;
-        isSelfDefine = b.Contains("KLData");
+                   s == "short[]" || s == "int8[]" || s == "byte[]" ? "System.Byte[]" : s;
+        isSelfDefine = b == s;
         return Type.GetType(b);
     }
 
