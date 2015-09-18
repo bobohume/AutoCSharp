@@ -204,7 +204,7 @@ namespace AutoCSharp.Creator
                 DataSet ds = Assist.ExcelToData(path);
                 DataTable dt = ds.Tables[0];
 
-                string classname = Assist.FirstLetterUp(dt.TableName);
+                string classname = Stringer.FirstLetterUp(dt.TableName);
 
                 Type classType = Type.GetType(classname);
 

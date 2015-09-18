@@ -69,7 +69,7 @@ namespace AutoCSharp.Creator
             {
                 bool isSelfDefine = false;                                  // 是否为自定义类型
                 bool isArray = item.Value.Contains("[]");                   // 是否为数组
-                Type t = Assist.GetFieldType(item.Value, ref isSelfDefine); // 属性类型 
+                Type t = Stringer.GetFieldType(item.Value, ref isSelfDefine); // 属性类型 
                 ProtoToCSItem i = new ProtoToCSItem(item.Key, t);
                 i.IsSelfDefine = isSelfDefine;
                 i.IsArray = isArray;
@@ -86,7 +86,7 @@ namespace AutoCSharp.Creator
             {
                 if (!inItem.IsSelfDefine)   // 非数组非自定义类型 eg. int, uint, byte etc.
                 {
-                    toStream.Method.Statements.Add(Line("stream." + inItem.Name, "data." + Assist.GetTobytesMethodName(inItem.MType.ToString())));                                                      // to stream
+                    toStream.Method.Statements.Add(Line("stream." + inItem.Name, "data." + Stringer.GetTobytesMethodName(inItem.MType.ToString())));                                                      // to stream
                     if (inItem.MType == typeof(System.String))
                     {
                         CodeExpression ieb = new CodeMethodInvokeExpression(new CodeTypeReferenceExpression("bytes"), "Write", new CodeVariableReferenceExpression("this." + inItem.Name + ".Length"));
@@ -100,7 +100,7 @@ namespace AutoCSharp.Creator
                     FieldInfo[] fi = inItem.MType.GetFields();
                     for (int i = 0; i < fi.Length; i++)
                     {
-                        toStream.Method.Statements.Add(Line("stream." + inItem.Name + "." + fi[i].Name, "data." + Assist.GetTobytesMethodName(fi[i].FieldType.ToString())));                            // to stream
+                        toStream.Method.Statements.Add(Line("stream." + inItem.Name + "." + fi[i].Name, "data." + Stringer.GetTobytesMethodName(fi[i].FieldType.ToString())));                            // to stream
 
                         CodeExpression ies = new CodeMethodInvokeExpression(new CodeTypeReferenceExpression("bytes"), "Write", new CodeVariableReferenceExpression("this." + inItem.Name + "." + fi[i].Name));
                         toBytes.Method.Statements.Add(ies);                                                                                                                                             // to bytes
@@ -121,7 +121,7 @@ namespace AutoCSharp.Creator
                     for (int i = 0; i < fi.Length; i++)
                     {
                         string streamLeft = "stream." + inItem.Name + "[i]." + fi[i].Name;
-                        string streamRight = "data." + Assist.GetTobytesMethodName(fi[i].FieldType.ToString());
+                        string streamRight = "data." + Stringer.GetTobytesMethodName(fi[i].FieldType.ToString());
                         curStreamFor.Statements.Add(Line(streamLeft, streamRight));
 
                         CodeExpression es = new CodeMethodInvokeExpression(new CodeTypeReferenceExpression("bytes"), "Write", new CodeVariableReferenceExpression("this." + inItem.Name + "[i]." + fi[i].Name));
@@ -131,7 +131,7 @@ namespace AutoCSharp.Creator
                 else // 非自定义数组数据类型 eg. int[]
                 {
                     string sleft = "stream." + inItem.Name + "[i]";
-                    string sright = "data." + Assist.GetTobytesMethodName(inItem.MType.ToString().Replace("[]",""));
+                    string sright = "data." + Stringer.GetTobytesMethodName(inItem.MType.ToString().Replace("[]",""));
                     curStreamFor.Statements.Add(Line(sleft, sright));                                                                                                                                   // to stream
 
                     CodeExpression es = new CodeMethodInvokeExpression(new CodeTypeReferenceExpression("bytes"), "Write", new CodeVariableReferenceExpression("this." + inItem.Name + "[i]"));
