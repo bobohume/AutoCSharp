@@ -156,13 +156,13 @@ public class Assist
         {
             return null;
         }
-        System.Reflection.PropertyInfo[] properties = t.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public);
+        PropertyInfo[] properties = t.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public);
 
         if (properties.Length <= 0)
         {
             return null;
         }
-        foreach (System.Reflection.PropertyInfo item in properties)
+        foreach (PropertyInfo item in properties)
         {
             ret.Add(item.Name, item.PropertyType.ToString());
         }
@@ -195,9 +195,9 @@ public class Assist
     /// <param name="inFolderName">目标文件夹名</param>
     static public void CheckFolderExist(string inFolderName)
     {
-        string p = System.Environment.CurrentDirectory + "/" + inFolderName;
-        if (!System.IO.Directory.Exists(p))
-            System.IO.Directory.CreateDirectory(p);
+        string p = Environment.CurrentDirectory + "/" + inFolderName;
+        if (!Directory.Exists(p))
+            Directory.CreateDirectory(p);
     }
 
     /// <summary>

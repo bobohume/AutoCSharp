@@ -101,14 +101,14 @@
     <Compile Include="Data\ToCSharpBase\ItemMethod.cs" />
     <Compile Include="Data\ToCSharpBase\ItemProperty.cs" />
     <Compile Include="Data\ToCSharpBase\ToCSharpBase.cs" />
-    <Compile Include="Do\Assist\Stringer.cs" />
-    <Compile Include="Do\Creator\Creater.cs" />
-    <Compile Include="Do\Creator\ExcelToXml.cs" />
-    <Compile Include="Do\Creator\Unit\ProtocolBuffer\ExcelToCSharp.cs" />
-    <Compile Include="Do\Creator\Unit\ProtocolBuffer\CreatePBData.cs" />
-    <Compile Include="Do\Creator\Unit\ProtocolBuffer\ProtoToCSharp.cs" />
-    <Compile Include="Do\Creator\Unit\ProtocolBuffer\XmlToCSharp.cs" />
-    <Compile Include="Do\Creator\Unit\Xml\XmlUnit.cs" />
+    <Compile Include="Data\Common\Stringer.cs" />
+    <Compile Include="Do\Creater.cs" />
+    <Compile Include="Do\Changer\ExcelToXml.cs" />
+    <Compile Include="Do\Changer\ExcelToCSharp.cs" />
+    <Compile Include="Do\Changer\CreatePBData.cs" />
+    <Compile Include="Do\Changer\ProtoToCSharp.cs" />
+    <Compile Include="Do\Changer\XmlToCSharp.cs" />
+    <Compile Include="Do\Changer\XmlUnit.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
